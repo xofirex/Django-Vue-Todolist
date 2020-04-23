@@ -1,35 +1,44 @@
 <template>
   <div id="app">
     <div>
+
       <b-card
-        title="Список задач"
-        style="max-width: 20rem;"
+
+        style="max-width: 18rem;"
         class="mb-2"
       >
-        <b-card-text style="text-align: left">
-          <div
-            v-for="(task, index) in all_tasks"
-            class="todo"
-            style="display: flex"
-          >
-            <div>
-              <b-icon v-if="task.is_complete" icon="check-circle"
-                      @click="updateTask(task.id, task.is_complete, index)"></b-icon>
-              <b-icon v-if="!task.is_complete" icon="circle"
-                      @click="updateTask(task.id, task.is_complete, index)"></b-icon>
-              {{ task.task_name }}
+        <div class="bg-secondary">
+          <div class="text-light">TODO list</div>
+        </div>
+        <div
+          v-for="(task, index) in all_tasks"
+          class="todo"
+          style="display: flex"
+        >
+          <div class="task-element">
+            <div v-if="task.is_complete">
+              <b-icon icon="check-circle"
+                      @click="updateTask(task.id, task.is_complete, index)">
+              </b-icon>
+              <em>{{task.task_name}}</em>
             </div>
-            <div>
-              <button @click="deleteData(task.id, index)">
-                <b-icon icon="bag-fill"></b-icon>
-              </button>
+            <div v-if="!task.is_complete">
+              <b-icon icon="circle"
+                      @click="updateTask(task.id, task.is_complete, index)"></b-icon>
+              {{task.task_name}}
             </div>
+
+
           </div>
-          <div class="add_task">
-            <button class="add_task btn" @click="add_task">➕</button>
-            <input placeholder="Новая задача..." type="text" v-model="new_task.task_name">
+          <div class="delete-task">
+            <b-icon @click="deleteData(task.id, index)" icon="bag-fill"></b-icon>
           </div>
-        </b-card-text>
+        </div>
+        <div class="add_task">
+          <button class="btn" @click="add_task">➕</button>
+          <input placeholder="Новая задача..." type="text" v-model="new_task.task_name">
+        </div>
+
       </b-card>
     </div>
   </div>
@@ -88,5 +97,36 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+  .card-body {
+    padding: 0;
+  }
 
+  .text-light {
+    margin-left: 10px;
+    text-align: left;
+    color: #f8f9fa !important;
+  }
+
+  .bg-secondary {
+    background-color: #6c757d !important;
+    margin-bottom: 20px;
+  }
+
+  .add_task {
+    margin-top: 100px;
+  }
+
+  .todo {
+    margin-bottom: 5px;
+    margin-left: 10px;
+  }
+
+  .task-element {
+    position: absolute;
+    margin-bottom: 5px;
+  }
+
+  .delete-task {
+    margin-left: 90%;
+  }
 </style>
