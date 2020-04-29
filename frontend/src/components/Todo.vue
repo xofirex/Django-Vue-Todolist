@@ -18,20 +18,20 @@
           <div class="task-element">
             <div v-if="task.is_complete">
               <b-icon icon="check-circle"
-                      @click="updateTask(task.id, task.is_complete, index)">
+                      @click="update_task(task.id, task.is_complete, index)">
               </b-icon>
               <em>{{task.task_name}}</em>
             </div>
             <div v-if="!task.is_complete">
               <b-icon icon="circle"
-                      @click="updateTask(task.id, task.is_complete, index)"></b-icon>
+                      @click="update_task(task.id, task.is_complete, index)"></b-icon>
               {{task.task_name}}
             </div>
 
 
           </div>
           <div class="delete-task">
-            <b-icon @click="deleteData(task.id, index)" icon="bag-fill"></b-icon>
+            <b-icon @click="delete_task(task.id, index)" icon="bag-fill"></b-icon>
           </div>
         </div>
         <div class="add_task">
@@ -65,12 +65,12 @@
               this.new_task.task_name = ''))
         }
       },
-      deleteData: function (id, index) {
+      delete_task: function (id, index) {
         const axios = require('axios');
         axios.delete('http://127.0.0.1:8000/api/tasks/' + id)
           .then(response => (this.all_tasks.splice(index, 1)));
       },
-      updateTask: function (id, is_complete, index) {
+      update_task: function (id, is_complete, index) {
         const status = is_complete ? false : true;
         const axios = require('axios');
         const str = {
@@ -86,7 +86,7 @@
       },
 
     },
-    mounted() {
+    get_task() {
       const axios = require('axios');
       axios
         .get('http://127.0.0.1:8000/api/tasks/')
